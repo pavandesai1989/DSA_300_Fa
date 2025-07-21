@@ -1,0 +1,30 @@
+
+https://leetcode.com/problems/sort-array-by-increasing-frequency/description/
+
+
+
+
+class Solution {
+public:
+    const bool cmp(int a,int b,unordered_map<int,int>& freq)
+    {
+         if(freq[a] == freq[b])
+         {
+            return a > b; // keep bigger number  before 
+         }
+         return freq[a] < freq[b];
+    }
+    vector<int> frequencySort(vector<int>& nums) 
+    {
+        unordered_map<int,int> freq;
+        for(auto ele:nums)
+        {
+            freq[ele]++;
+        }
+
+        //sort the array 
+        sort(nums.begin(),nums.end(),[&](int a,int b){return cmp(a,b,freq);});
+
+        return nums;   
+    }
+};
