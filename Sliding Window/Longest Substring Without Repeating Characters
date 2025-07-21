@@ -1,0 +1,38 @@
+https://leetcode.com/problems/longest-substring-without-repeating-characters/
+
+https://www.naukri.com/code360/problems/longest-substring-without-repeating-characters_630418?leftPanelTabValue=SUBMISSION
+
+#include <bits/stdc++.h> 
+int uniqueSubstrings(string input)
+{
+    int n=input.length();
+    int res=INT_MIN;
+    int i=0,j=0;
+    unordered_map<char,int> umap;
+
+    while(j<n)
+    {
+        //add to map
+        umap[input[j]]++;
+
+        //if we find char which is repeating 
+        while(umap[input[j]]>1)
+        {
+           //reduce freq from the left
+           umap[input[i]]--;
+
+           //if freq 0 remove from the map
+           if(umap[input[i]] == 0)
+           {
+               umap.erase(umap[input[i]]);
+           }
+           i++;
+        }
+
+        //update res
+        res = max(res,j-i+1);
+
+        j++;
+    }
+    return res;
+}
