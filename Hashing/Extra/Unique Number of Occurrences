@@ -1,0 +1,39 @@
+https://leetcode.com/problems/unique-number-of-occurrences/description/
+
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) 
+    {
+        unordered_map<int,int> freq;
+        for(auto ele:arr)
+        {
+            freq[ele]++;
+        }
+
+        set<int> myset;  //u can use unordered_set here ****
+        for(auto ele:freq)
+        {
+            if(myset.find(ele.second) != myset.end())
+            {
+                return false; //not unique
+            }
+            myset.insert(ele.second);
+        }
+
+        return true;        
+    }
+};
+
+freq map : So total time: O(n)
+
+freq has m entries (unique numbers)***************
+
+For each, you're doing:
+
+myset.find() → O(log m) (since set is implemented as a balanced BST)
+
+myset.insert() → O(log m)
+
+Total time for this loop: O(m log m)
+
+total time : O(n + m log m)
