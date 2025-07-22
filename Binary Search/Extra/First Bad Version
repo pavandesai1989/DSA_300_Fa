@@ -1,0 +1,32 @@
+https://leetcode.com/problems/first-bad-version/description/
+
+
+// The API isBadVersion is defined for you.
+// bool isBadVersion(int version);
+
+class Solution {
+public:
+    int firstBadVersion(int n) 
+    {
+        int low=0;
+        int high=n;
+        int mid=0;
+        int ans=0;
+
+        while(low<=high)
+        {
+            mid = (high-low)/2+low;
+
+            if(isBadVersion(mid))
+            {
+                ans=mid;
+                high=mid-1; //imp keep search on left for 1st bad version 
+            }
+            else
+            {
+                low = mid+1; //bad version will be on right side
+            }
+        }
+        return ans;
+    }
+};
