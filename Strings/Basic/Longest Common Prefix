@@ -1,0 +1,32 @@
+https://leetcode.com/problems/longest-common-prefix/description/
+
+Algo:
+we can sort the given vector
+compare first and last string only 
+**imp length to check is minLen of first and second
+
+
+
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) 
+    {
+        sort(strs.begin(),strs.end());
+
+        //compare 1st and last 
+        string first =strs[0];
+        string last=strs[strs.size()-1];
+        int minLen = min(first.size(),last.size());
+        string res;
+
+        for(int i=0;i<minLen;i++)
+        {
+            if(first[i]!=last[i])
+            {
+                return res;
+            }
+            res += first[i];
+        }
+        return res;
+    }
+};
