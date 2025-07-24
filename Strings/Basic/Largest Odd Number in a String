@@ -1,0 +1,34 @@
+https://leetcode.com/problems/largest-odd-number-in-string/description/
+
+algo :
+find the odd digit from the end of the string 
+since its string we need to use s[i]-'0' 
+then traverse from left avoid 0's
+return the substring from i till idx s.substr(i,idx-i+1)
+
+class Solution {
+public:
+    string largestOddNumber(string num) 
+    {
+        //get the odd char from end
+        int n=num.size();
+        int idx=-1;
+        int i=0;
+        for(i=n-1;i>=0;i--)
+        {
+            if((num[i]-'0')%2 == 1)
+            {
+                idx = i;
+                break;
+            }
+        }
+
+        if(idx == -1) return "";
+        i=0;
+
+        //get 1st non 0 num
+        while(i<=idx && num[i]=='0') i++;
+
+        return num.substr(i,idx-i+1); 
+    }
+};
