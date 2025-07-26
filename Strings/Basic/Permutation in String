@@ -1,0 +1,91 @@
+https://leetcode.com/problems/permutation-in-string/description/
+
+approach 1:
+
+
+approach 2: sorting 
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) 
+    {
+        int n=s1.length();
+        int m=s2.length();
+
+        if(n>m) return false;
+
+        //sort the s1
+        sort(s1.begin(),s1.end());
+
+        for(int i=0;i<m;i++)
+        {
+            string subString = s2.substr(i,n);
+
+            //sort 
+            sort(subString.begin(),subString.end());
+
+            //compare
+            if(s1==subString) return true;
+        }
+        return false;
+    }
+};
+
+time : Time complexity
+Sorting s1: O(n log n).
+
+Outer loop runs m times in your code, but it should run only m - n + 1 times.
+For each iteration you:
+
+build a substring of length n: O(n)
+
+sort it: O(n log n)
+So per iteration ≈ O(n log n).
+
+Overall: O(n log n + (m - n + 1) · n log n) = O(m · n log n).
+
+Space complexity
+You allocate a new substring of length n each iteration → O(n) extra space.
+
+Sorting in-place adds only O(log n) stack, which is dominated by O(n).
+
+******sliding winow****
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) 
+    {
+        unordered_map<char,int> mp1;
+        unordered_map<char,int> mp2;
+
+        for(auto ele:s1)
+        {
+            mp1[ele]++;
+        }
+        int i=0;
+        int j=0;
+        int n=s2.length();
+        int m=s1.length();
+
+        while(j<n)
+        {
+        //add to map 2
+           mp2[s2[j]]++;
+
+           if(j-i+1 >m)
+           {
+                //reduce window
+                mp2[s2[i]]--;
+                if(mp2[s2[i]] == 0)
+                {
+                    mp2.erase(s2[i]);  //vvvvimp
+                }
+                i++;
+           }
+
+           //check if freq match 
+           if(mp1==mp2) return true;
+
+           j++;
+        }
+        return false;
+    }
+};
